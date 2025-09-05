@@ -56,3 +56,50 @@ git push
 
 - **Note** \
   Please don't commit on **main** branch
+
+db.venues.insertMany([
+...   {
+...     "venueName": "Grand Hall",
+...     "slug": "grand-hall",
+...     "address": "123 Street, Mumbai",
+...     "capacity": 300,
+...     "price": 5000,
+...     "venuePictures": [
+...        { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNKJaWTNzwmgosQ1DXah-zt3UDOydh5ZGm8g&s" },
+...       { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9HBS7iK_UV-Ko9xXPmOcfL3Sm34wfNkQZew&s" }
+...     ]
+...   },
+...   {
+...     "venueName": "Royal Banquet",
+...     "slug": "royal-banquet",
+...     "address": "45 Avenue, Pune",
+...     "capacity": 200,
+...     "price": 4000,
+...     "venuePictures": [
+...       { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLlrFJ4JyS8pYYq-eVe670c9AeUvzBsfsosg&s" },
+          { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe55IlO1Z-SU5ZfmQVGKTkijhld9_aqi8ZMw&s" }
+...     ]
+...   },
+...   {
+...     "venueName": "Sunset Gardens",
+...     "slug": "sunset-gardens",
+...     "address": "78 Park Lane, Bangalore",
+...     "capacity": 150,
+...     "price": 3500,
+...     "venuePictures": [
+...       { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLlrFJ4JyS8pYYq-eVe670c9AeUvzBsfsosg&s" },
+...       { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe55IlO1Z-SU5ZfmQVGKTkijhld9_aqi8ZMw&s" }
+...     ]
+...   },
+...   {
+...     "venueName": "Ocean View Hall",
+...     "slug": "ocean-view-hall",
+...     "address": "12 Beach Road, Goa",
+...     "capacity": 250,
+...     "price": 4800,
+...     "venuePictures": [
+...       { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNKJaWTNzwmgosQ1DXah-zt3UDOydh5ZGm8g&s" },
+...       { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9HBS7iK_UV-Ko9xXPmOcfL3Sm34wfNkQZew&s" }
+...     ]
+...   }
+... ]);

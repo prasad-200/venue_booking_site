@@ -46,8 +46,8 @@ function Home() {
                                 return (
                                     <div className="col-md-4">
                                         <VenueCard
-                                            img1={venuePictures[0].img}
-                                            img2={venuePictures[1].img}
+                                            img1={venuePictures[0]?.img}
+                                            img2={venuePictures[1]?.img}
                                             venueName={venueName}
                                             _id={_id}
                                             userId={auth.user._id}
