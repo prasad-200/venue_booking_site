@@ -63,6 +63,13 @@ db.venues.insertMany([
 ...     "slug": "grand-hall",
 ...     "address": "123 Street, Mumbai",
 ...     "capacity": 300,
+        "category":"conference",
+        "location":"Mumbai",
+        "ownerInfo":{
+          "ownerName":"abc",
+          "contactNumber":9004123121
+        },
+        "ownerId":"2303127",
 ...     "price": 5000,
 ...     "venuePictures": [
 ...        { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNKJaWTNzwmgosQ1DXah-zt3UDOydh5ZGm8g&s" },
@@ -74,6 +81,13 @@ db.venues.insertMany([
 ...     "slug": "royal-banquet",
 ...     "address": "45 Avenue, Pune",
 ...     "capacity": 200,
+        "category":"wedding",
+        "location":"Pune",
+        "ownerInfo":{
+          "ownerName":"abc",
+          "contactNumber":9004123121
+        },
+        "ownerId":"2303127",
 ...     "price": 4000,
 ...     "venuePictures": [
 ...       { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLlrFJ4JyS8pYYq-eVe670c9AeUvzBsfsosg&s" },
@@ -85,6 +99,13 @@ db.venues.insertMany([
 ...     "slug": "sunset-gardens",
 ...     "address": "78 Park Lane, Bangalore",
 ...     "capacity": 150,
+        "category":"conference",
+        "location":"Bangalore",
+        "ownerInfo":{
+          "ownerName":"abc",
+          "contactNumber":9004123121
+        },
+        "ownerId":"2303127",
 ...     "price": 3500,
 ...     "venuePictures": [
 ...       { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLlrFJ4JyS8pYYq-eVe670c9AeUvzBsfsosg&s" },
@@ -96,6 +117,13 @@ db.venues.insertMany([
 ...     "slug": "ocean-view-hall",
 ...     "address": "12 Beach Road, Goa",
 ...     "capacity": 250,
+        "category":"wedding",
+        "location":"Goa",
+        "ownerInfo":{
+          "ownerName":"abc",
+          "contactNumber":9004123121
+        },
+        "ownerId":"2303127",
 ...     "price": 4800,
 ...     "venuePictures": [
 ...       { "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNKJaWTNzwmgosQ1DXah-zt3UDOydh5ZGm8g&s" },

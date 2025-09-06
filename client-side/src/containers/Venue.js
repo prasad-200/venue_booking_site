@@ -15,7 +15,8 @@ const VenuePage = (props) => {
     const auth = useSelector(state => state.auth)
     const [bookingModalShow, setBookingModalShow] = useState(false);
     const oneVenueInfo = useSelector(state => state.oneVenueInfo);
-    const { _id, venueName, description, address, location, category, price, venuePictures, ownerInfo, ownerId } = oneVenueInfo.venue;
+    const { _id, venueName, description, address, location, 
+        category, price, venuePictures, ownerInfo, ownerId } = oneVenueInfo.venue;
 
     if (oneVenueInfo.loading) {
         return (
@@ -38,8 +39,8 @@ const VenuePage = (props) => {
                     <div className="row">
                         <div className="col-md-6 mb-4 mb-md-0">
                             <ImgsCard
-                                img1={getPublicURL(venuePictures[0].img)}
-                                img2={getPublicURL(venuePictures[1].img)}
+                                img1={venuePictures[0]?.img}
+                                img2={venuePictures[1]?.img}
                                 alt='venue picture'
                             />
                         </div>

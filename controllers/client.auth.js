@@ -32,10 +32,10 @@ const signin = (req, res) => {
                     const token = jwt.sign(
                         { id: user._id, role: user.role },
                         process.env.jwt_secret,
-                        { expiresIn: '2h' }
+                        { expiresIn: '5h' }
                     )
                     const { _id, firstName, lastName, profilePicture, email, role, fullName, username, contactNumber } = user;
-                    res.cookie('token', token, { expiresIn: '2h' });
+                    res.cookie('token', token, { expiresIn: '5h' });
                     res.status(200).json({
                         token,
                         user: {

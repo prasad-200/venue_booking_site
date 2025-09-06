@@ -60,6 +60,12 @@ const serverConstants = {
     SERVER_OFFLINE: 'SERVER_OFFLINE'
 }
 
+const checkoutConstants={
+    CHECKOUT_REQUEST: 'CHECKOUT_REQUEST',
+    CHECKOUT_SUCCESS: 'CHECKOUT_SUCCESS',
+    CHECKOUT_FAILURE: 'CHECKOUT_FAILURE',
+}
+
 export {
     authConstants,
     registerConstants,
@@ -69,6 +75,7 @@ export {
     dealsConstants,
     saveDealConstants,
     deleteDealConstants,
-    serverConstants
+    serverConstants,
+    checkoutConstants
 }
 

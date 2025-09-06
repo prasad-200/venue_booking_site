@@ -2,6 +2,7 @@ import { dealsConstants } from "./constants";
 import axios from '../helpers/axios';
 
 const getDeals = (user_role, _id) => {
+    console.log(user_role,_id);
     return async (dispatch) => {
         dispatch({
             type: dealsConstants.GET_DEALS_REQUEST

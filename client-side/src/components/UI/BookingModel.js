@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import Input from './Input';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from '../../helpers/axios';
+import { checkoutConstants } from '../../actions/constants';
 
 const BookingModel = (props) => {
 
@@ -15,6 +16,7 @@ const BookingModel = (props) => {
     const auth = useSelector(state => state.auth);
 
     const gotoCheckoutPage = async (e) => {
+        console.log("isWorking");
         if (!auth.authenticate) {
             return <Redirect to={'/signin'} />
         }
@@ -28,12 +30,52 @@ const BookingModel = (props) => {
                 bill: price,
                 eventDate: date.toString()
             }
-            console.log(dealInfo);
-            const res = await axios.post(`/checkout`, dealInfo);
-            localStorage.setItem('dealId', JSON.stringify(res.data.dealId));
-            window.location.href = res.data.url;
+            gotoCheckout(dealInfo);
+            // console.log(dealInfo);
+            // const res = await axios.post(`/checkout`, dealInfo);
+            // console.log(res.data,res);
+            // localStorage.setItem('dealId', JSON.stringify(res.data.dealId));
+            //window.location.href = res.data.url;
         }
     }
+  
+    const gotoCheckout = (dealInfo) => {
+    console.log(dealInfo);
+    return async (dispatch) => {
+        dispatch({
+            type: checkoutConstants.CHECKOUT_REQUEST
+        });
+
+        try {
+            const res = await axios.post(`/checkout`, dealInfo);
+
+            if (res.status === 201) {
+                localStorage.setItem('dealId', JSON.stringify(res.data.dealId));
+                dispatch({
+                    type: checkoutConstants.CHECKOUT_SUCCESS,
+                    payload: {
+                        //url: res.data.url,
+                        dealId: res.data.dealId
+                    }
+                })
+            } else {
+                dispatch({
+                    type: checkoutConstants.CHECKOUT_FAILURE,
+                    paylaod: {
+                        error: res.data.msg
+                    }
+                })
+            }
+        } catch {
+            dispatch({
+                type: checkoutConstants.CHECKOUT_FAILURE,
+                paylaod: {
+                    error: "Something went wrong"
+                }
+            })
+        }
+    }
+}
 
     return (
         <Modal

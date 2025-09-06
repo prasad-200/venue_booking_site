@@ -3,35 +3,40 @@ const Deal = require('../models/deal');
 
 const checkout = async (req, res) => {
     const { venueId, eventDate, bill, venueName, venueOwnerId } = req.body;
-
+    console.log(bill);
     try {
-        const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
-            mode: 'payment',
-            success_url: `${process.env.global_client_url}/payment-status?success=true`,
-            cancel_url: `${process.env.global_client_url}/payment-status?canceled=true`,
-            line_items: [
-                {
-                    price_data: {
-                        currency: 'inr',
-                        product_data: {
-                            name: venueName
-                        },
-                        unit_amount: bill * 100
-                    },
-                    quantity: 1
-                }
-            ]
-        })
+        const session=true;
+        // const session = await stripe.checkout.sessions.create({
+        //     payment_method_types: ['card'],
+        //     mode: 'payment',
+        //     success_url: `${process.env.global_client_url}/payment-status?success=true`,
+        //     cancel_url: `${process.env.global_client_url}/payment-status?canceled=true`,
+        //     line_items: [
+        //         {
+        //             price_data: {
+        //                 currency: 'inr',
+        //                 product_data: {
+        //                     name: venueName
+        //                 },
+        //                 unit_amount: bill * 100
+        //             },
+        //             quantity: 1
+        //         }
+        //     ]
+        // })
+        // console.log(session);
         if (session) {
             const deal = new Deal({
                 venueId, eventDate, venueName, venueOwnerId,
                 bill: bill,
                 userId: req.user.id
             });
+            console.log(deal);
             deal.save((error, _deal) => {
+               console.log(_deal._id);
                 if (error) return res.status(400).json({ msg: "Something went wrong", error });
-                if (_deal) return res.status(201).json({ url: session.url, dealId: _deal._id })
+                //if (_deal) return res.status(201).json({ url: session.url, dealId: _deal._id })
+                if (_deal) return res.status(201).json({ dealId: _deal._id })
             })
         } else {
             res.status(400).json({ msg: `session not created` })
