@@ -39,7 +39,7 @@ const Layout = (props) => {
                                 <Avatar
                                     size={25}
                                     name={auth.user.fullName}
-                                    variant="bauhaus"
+                            
                                     colors={["#A3A948", "#EDB92E", "#F85931", "#CE1836", "#009989"]}
                                 />
                             </div>
@@ -76,7 +76,7 @@ const Layout = (props) => {
             <>
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ marginBottom: "15px" }}>
                     <Container>
-                        <Link to={`/`} className="navbar-brand">🤝KAPPA</Link>
+                        <Link to={`/`} className="navbar-brand">🤝Venue booking app </Link>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto"></Nav>

@@ -1,16 +1,11 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
 
-const PrivateRoute = (props) => {
-    const { component: Component, ...rest } = props;
-    return <Route {...rest} component={(props_s) => {
-        const token = window.localStorage.getItem('token');
-        if (token) {
-            return <Component {...props_s} />
-        } else {
-            return <Redirect to={'/signin'} />
-        }
-    }} />
-}
+import { Navigate } from "react-router-dom";
 
-export default PrivateRoute
+const PrivateRoute = ({ children }) => {
+  const token = window.localStorage.getItem("token");
+
+  return token ? children : <Navigate to="/signin" replace />;
+};
+
+export default PrivateRoute;

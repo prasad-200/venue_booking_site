@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Row, Col, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import Input from './Input';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from '../../helpers/axios';
@@ -12,13 +12,14 @@ const BookingModel = (props) => {
     const { _id, venueName, price, category, location, address, ownerId } = props;
     const [date, setDate] = useState(new Date());
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const auth = useSelector(state => state.auth);
 
     const gotoCheckoutPage = async (e) => {
-        console.log("isWorking");
+        
         if (!auth.authenticate) {
-            return <Redirect to={'/signin'} />
+            return navigate('/signin');
         }
         else {
             e.preventDefault();
@@ -30,52 +31,35 @@ const BookingModel = (props) => {
                 bill: price,
                 eventDate: date.toString()
             }
-            gotoCheckout(dealInfo);
-            // console.log(dealInfo);
-            // const res = await axios.post(`/checkout`, dealInfo);
-            // console.log(res.data,res);
-            // localStorage.setItem('dealId', JSON.stringify(res.data.dealId));
-            //window.location.href = res.data.url;
-        }
-    }
-  
-    const gotoCheckout = (dealInfo) => {
-    console.log(dealInfo);
-    return async (dispatch) => {
-        dispatch({
-            type: checkoutConstants.CHECKOUT_REQUEST
+        const res = await axios.post(`/checkout`, dealInfo);
+
+        
+        if (res.status >= 200 && res.status < 209) {
+        // Success case
+       // localStorage.setItem('dealId', JSON.stringify(res.data.dealId));
+        navigate('/payment-status', {
+            state: {
+            bookingStatus: 'success',
+            dealId: res.data.dealId,
+            },
         });
-
-        try {
-            const res = await axios.post(`/checkout`, dealInfo);
-
-            if (res.status === 201) {
-                localStorage.setItem('dealId', JSON.stringify(res.data.dealId));
-                dispatch({
-                    type: checkoutConstants.CHECKOUT_SUCCESS,
-                    payload: {
-                        //url: res.data.url,
-                        dealId: res.data.dealId
-                    }
-                })
-            } else {
-                dispatch({
-                    type: checkoutConstants.CHECKOUT_FAILURE,
-                    paylaod: {
-                        error: res.data.msg
-                    }
-                })
-            }
-        } catch {
-            dispatch({
-                type: checkoutConstants.CHECKOUT_FAILURE,
-                paylaod: {
-                    error: "Something went wrong"
-                }
-            })
+        } else {
+        // Cancelled case
+        navigate('/payment-status', {
+            state: {
+            bookingStatus: 'cancelled',
+            dealId: res.data.dealId,
+            },
+        });
         }
-    }
-}
+
+            
+        }
+            
+        }
+    
+  
+    
 
     return (
         <Modal
@@ -162,7 +146,7 @@ const BookingModel = (props) => {
                                         {" "} Processing...
                                     </>
                                     :
-                                    <span>Payment</span>
+                                    <span>Book now</span>
                             }
                         </Button>
 

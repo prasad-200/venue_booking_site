@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route,Routes} from 'react-router-dom';
 import PrivateRoute from './components/HOC/PrivateRoute';
 import Home from './containers/Home';
 import Signin from './containers/Signin';
@@ -23,15 +23,24 @@ function App() {
 
   return (
     <div className="App">
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/signin" component={Signin} />
-        <Route path="/signup" component={Signup} />
-        <PrivateRoute path="/profile/:id" component={ProfilePage} />
-        <Route path="/venue/:id" component={VenuePage} />
-        <Route path="/payment-status" component={PaymentStatus} />
-      </Switch>
-    </div>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/signin" element={<Signin />} />
+    <Route path="/signup" element={<Signup />} />
+    <Route 
+     path="/profile/:id" 
+     element={
+     <PrivateRoute>
+       <ProfilePage />
+    </PrivateRoute>
+   } 
+   />
+
+    <Route path="/venue/:id" element={<VenuePage />} />
+    <Route path="/payment-status" element={<PaymentStatus />} />
+  </Routes>
+</div>
+
   );
 }
 

@@ -37,7 +37,7 @@ const checkout = async (req, res) => {
                 if (error) return res.status(400).json({ msg: "Something went wrong", error });
                 //if (_deal) return res.status(201).json({ url: session.url, dealId: _deal._id })
                 if (_deal) return res.status(201).json({ dealId: _deal._id })
-            })
+            }) 
         } else {
             res.status(400).json({ msg: `session not created` })
         }
@@ -48,6 +48,7 @@ const checkout = async (req, res) => {
 
 const confirmDeal = async (req, res) => {
     const { dealId } = req.params;
+    console.log(dealId);
     const deal = await Deal.findOneAndUpdate({ _id: dealId }, {
         status: "green"
     });
@@ -71,6 +72,7 @@ const confirmDealsOfUser = (req, res) => {
             if (_allDeals) return res.status(200).json({ _allDeals });
         })
 }
+
 const confirmDealsOfDealer = (req, res) => {
     const { dealerId } = req.params;
     Deal.find({ venueOwnerId: dealerId, status: "green" })

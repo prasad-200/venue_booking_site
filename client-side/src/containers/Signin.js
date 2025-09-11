@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Layout from '../components/Layout/index.layout'
 import { Button, Container, Row, Col, Card } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { LoginModel } from '../components/UI/LoginModel';
 
@@ -10,13 +10,13 @@ import client_signin from '../assets/images/client-signin.svg';
 import dealer_signin from '../assets/images/dealer-signin.svg';
 
 const Signin = () => {
-    document.title = "KAPPA | Sign In";
+    document.title = "Venue booking app | Sign In";
     const [userModalShow, setUserModalShow] = useState(false);
     const [DealerModalShow, setDealerModalShow] = useState(false);
-
     const auth = useSelector(state => state.auth);
+    const navigate = useNavigate();
     if (auth.authenticate) {
-        return <Redirect to={'/'} />
+        return navigate('/');
     }
 
     return (

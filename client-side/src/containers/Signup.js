@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout/index.layout';
 import { Container, Form, Button, Row, Col, Spinner } from 'react-bootstrap';
 import Input from '../components/UI/Input';
-import { Redirect } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { userRegister } from '../actions/register.actions';
 import MessageBox from '../components/UI/MessageBox';
 
 const Signup = (props) => {
-    document.title = "KAPPA | Sign Up";
+    document.title = "Venue booking app  | Sign Up";
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
@@ -29,8 +29,9 @@ const Signup = (props) => {
 
     const auth = useSelector(state => state.auth);
     const registrationStatus = useSelector(state => state.registrationStatus);
+    const navigate = useNavigate();
     if (auth.authenticate) {
-        return <Redirect to={'/'} />
+        return navigate('/');
     }
 
     if (registrationStatus.loading) {

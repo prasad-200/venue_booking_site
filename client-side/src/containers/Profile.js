@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Spinner, Button } from 'react-bootstrap';
 import Layout from '../components/Layout/index.layout';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import VenueCard from '../components/UI/VenueCard';
 import { ProfileCard, UserInfoCard } from '../components/UI/ProfileCards';
 import { DealsHistory } from '../components/UI/DealsHistory';
@@ -11,7 +11,7 @@ import AddVenueModel from '../components/UI/AddVenueModel';
 import getDeals from '../actions/dealsHistory.actions';
 
 const ProfilePage = (props) => {
-    document.title = "KAPPA | Profile";
+    document.title = "Venue booking app | Profile";
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
     const userInfo = useSelector(state => state.userInfo);
@@ -19,9 +19,9 @@ const ProfilePage = (props) => {
     const deals = useSelector(state => state.deals);
     console.log(deals);
     const [addVenueModalShow, setAddVenueModalShow] = useState(false);
-
+    const navigate = useNavigate();
     if (auth.token === null) {
-        return <Redirect to={'/'} />
+        return navigate('/');
     }
     if (userInfo.loading) {
         return (

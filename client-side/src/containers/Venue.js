@@ -7,17 +7,17 @@ import { getOneVenue } from '../actions/venue.actions';
 import { getPublicURL } from '../urlConfig';
 import { userInfo } from '../actions/userInfo.actions';
 import BookingModel from '../components/UI/BookingModel';
-import { Redirect } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const VenuePage = (props) => {
-    document.title = "KAPPA | Venue Details";
+    document.title = "Venue booking app | Venue Details";
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth)
     const [bookingModalShow, setBookingModalShow] = useState(false);
     const oneVenueInfo = useSelector(state => state.oneVenueInfo);
     const { _id, venueName, description, address, location, 
         category, price, venuePictures, ownerInfo, ownerId } = oneVenueInfo.venue;
-
+    const navigate=useNavigate();
     if (oneVenueInfo.loading) {
         return (
             <Layout>
@@ -29,7 +29,7 @@ const VenuePage = (props) => {
         );
     }
     if (oneVenueInfo.venue._id === '') {
-        return <Redirect to={`/`} />
+        return navigate(`/`);
     }
 
     return (

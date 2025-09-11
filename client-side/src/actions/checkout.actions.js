@@ -6,7 +6,7 @@ const paymentSuccess = (dealId) => {
         dispatch({
             type: saveDealConstants.SAVE_DEAL_REQUEST
         });
-
+      console.log(dealId);
         try {
             const res = await axios.patch(`/confirm-deal/${dealId}`);
             if (res.status === 200) {
@@ -23,6 +23,7 @@ const paymentSuccess = (dealId) => {
 }
 
 const paymentCanceled = (dealId) => {
+    console.log(dealId);
     return async (dispatch) => {
         dispatch({
             type: deleteDealConstants.DELETE_DEAL_REQUEST

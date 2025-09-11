@@ -10,7 +10,7 @@ const ProfileCard = (props) => {
                     <Avatar
                         size={100}
                         name={fullName}
-                        variant="bauhaus"
+                    
                         colors={["#A3A948", "#EDB92E", "#F85931", "#CE1836", "#009989"]}
                     />
                     <div className="mt-3">
