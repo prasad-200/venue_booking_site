@@ -8,7 +8,7 @@ import { getPublicURL } from '../urlConfig';
 import { isEmpty } from '../helpers/isObjEmpty';
 
 function Home() {
-    document.title = "KAPPA | Home";
+    document.title = "| Home";
     const allVenuesInfo = useSelector(state => state.allVenuesInfo);
     const auth = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function Home() {
         dispatch(getVenues());
     }, []);
 
-    if (allVenuesInfo.loading) {
+    if (allVenuesInfo.loading){
         return (
             <Layout>
                 <div className='text-center' style={{ marginTop: '60px' }}>

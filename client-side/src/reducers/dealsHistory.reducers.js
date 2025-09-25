@@ -1,4 +1,4 @@
-import { dealsConstants } from '../actions/constants';
+import { dealsConstants, deleteDealConstants } from '../actions/constants';
 
 const initialState = {
     allDeals: {},
@@ -27,7 +27,14 @@ const dealsReducer = (state = initialState, action) => {
                 message: action.payload
             }
             break;
+        
+        case deleteDealConstants.DELETE_DEAL_SUCCESS:
+            state = {
+                ...state,
+                allDeals: state.allDeals.filter((deal)=>deal._id != action.payload)
 
+            }
+            break; 
         default:
             break;
     }

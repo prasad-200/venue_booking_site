@@ -33,7 +33,8 @@ const paymentCanceled = (dealId) => {
             const res = await axios.delete(`delete-unconfirmDeal/${dealId}`);
             if (res.status === 200) {
                 dispatch({
-                    type: deleteDealConstants.DELETE_DEAL_SUCCESS
+                    type: deleteDealConstants.DELETE_DEAL_SUCCESS,
+                    payload: dealId
                 })
             }
         } catch (error) {

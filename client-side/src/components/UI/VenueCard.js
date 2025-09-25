@@ -40,7 +40,7 @@ const VenueCard = (props) => {
                     <Link to={`/venue/${_id}`} className="btn-group">
                         <Button variant="primary" size="sm" onClick={getVenueInfo}>Details</Button>{' '}
                     </Link>
-                    {
+                    {/* {
                         isDelete === true ?
                             <Button variant="danger" size="sm">Delete</Button>
                             :
@@ -48,7 +48,7 @@ const VenueCard = (props) => {
                                 <></>
                                 :
                                 <Button variant="danger" size="sm" onClick={() => setBookingModalShow(true)}>Book</Button>
-                    }
+                    } */}
                     <BookingModel
                         _id={_id}
                         venueName={venueName}
