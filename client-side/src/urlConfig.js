@@ -1,4 +1,4 @@
-export const api = "http://localhost:5000/api";
+export const api = "https://venue-booking-site.vercel.app/api";
 export const getPublicURL = (filename) => {
   if (!filename) return "";
 
