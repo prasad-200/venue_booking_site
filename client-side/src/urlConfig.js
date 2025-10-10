@@ -1,4 +1,4 @@
-export const api = "https://venue-booking-site.vercel.app/api";
+export const api = "https://venuebookingsite-production.up.railway.app/api";
 export const getPublicURL = (filename) => {
   if (!filename) return "";
 
