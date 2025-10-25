@@ -1,50 +1,70 @@
 const stripe = require('stripe')(process.env.stripe_key);
 const Deal = require('../models/deal');
+const mongoose = require("mongoose");
+
 
 const checkout = async (req, res) => {
-    const { venueId, eventDate, bill, venueName, venueOwnerId } = req.body;
-    console.log(bill);
-    try {
-        const session=true;
-        // const session = await stripe.checkout.sessions.create({
-        //     payment_method_types: ['card'],
-        //     mode: 'payment',
-        //     success_url: `${process.env.global_client_url}/payment-status?success=true`,
-        //     cancel_url: `${process.env.global_client_url}/payment-status?canceled=true`,
-        //     line_items: [
-        //         {
-        //             price_data: {
-        //                 currency: 'inr',
-        //                 product_data: {
-        //                     name: venueName
-        //                 },
-        //                 unit_amount: bill * 100
-        //             },
-        //             quantity: 1
-        //         }
-        //     ]
-        // })
-        // console.log(session);
-        if (session) {
-            const deal = new Deal({
-                venueId, eventDate, venueName, venueOwnerId,
-                bill: bill,
-                userId: req.user.id
-            });
-            console.log(deal);
-            deal.save((error, _deal) => {
-               console.log(_deal._id);
-                if (error) return res.status(400).json({ msg: "Something went wrong", error });
-                //if (_deal) return res.status(201).json({ url: session.url, dealId: _deal._id })
-                if (_deal) return res.status(201).json({ dealId: _deal._id })
-            }) 
-        } else {
-            res.status(400).json({ msg: `session not created` })
-        }
-    } catch (e) {
-        return res.status(400).json({ msg: e })
+  const { venueId, eventDate, bill, venueName, venueOwnerId } = req.body;
+
+  try {
+    const paymentSession = true; // simulate Stripe session
+
+    if (!venueId || !eventDate || !bill) {
+      return res.status(400).json({ msg: "Missing required booking details" });
     }
-}
+
+    if (!paymentSession) {
+      return res.status(400).json({ msg: "Payment session not created" });
+    }
+
+    // Start MongoDB transaction
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+      // Step 1: Check if this venue is already booked for this date
+      const existingDeal = await Deal.findOne({ venueId, eventDate }).session(session);
+
+      if (existingDeal) {
+        await session.abortTransaction();
+        session.endSession();
+        return res
+          .status(409)
+          .json({ msg: "Venue already booked for this date" });
+      }
+
+      // Step 2: Create a new tentative deal
+      const deal = new Deal({
+        venueId,
+        eventDate,
+        venueName,
+        venueOwnerId,
+        bill,
+        userId: req.user.id,
+        status: "pending", // optional, better than undefined
+      });
+
+      const savedDeal = await deal.save({ session });
+
+      // Step 3: Commit transaction
+      await session.commitTransaction();
+      session.endSession();
+
+      return res.status(201).json({
+        msg: "Booking created successfully",
+        dealId: savedDeal._id,
+      });
+    } catch (error) {
+      await session.abortTransaction();
+      session.endSession();
+      console.error("Booking transaction failed:", error);
+      return res.status(500).json({ msg: "Booking failed", error });
+    }
+  } catch (e) {
+    console.error("Checkout error:", e);
+    return res.status(500).json({ msg: "Server error during checkout", e });
+  }
+};
 
 const confirmDeal = async (req, res) => {
     const { dealId } = req.params;
