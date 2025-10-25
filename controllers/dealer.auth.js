@@ -52,23 +52,30 @@ const signin = (req, res) => {
         })
 }
 
-const DealerProfile = (req, res) => {
-    const { userId } = req.params;
-    if (userId) {
-        User.findById({ _id: userId })
-            .exec((error, _user) => {
-                if (error) return res.status(400).json({ msg: `Something went wrong`, error });
-                if (_user) {
-                    const { _id, fullName, firstName, lastName, profilePicture, email, role, username, contactNumber, createdAt } = _user;
-                    return res.status(200).json({
-                        user: { _id, fullName, firstName, lastName, profilePicture, email, role, username, contactNumber, createdAt }
-                    });
-                }
-            })
-    } else {
-        return res.status(404).json({ msg: `Dealer dosen't exits` });
+const DealerProfile = async (req, res) => {
+  const { userId } = req.params;
+
+  if (!userId) {
+    return res.status(404).json({ msg: `Dealer doesn't exist` });
+  }
+
+  try {
+    const _user = await User.findById(userId);
+
+    if (!_user) {
+      return res.status(404).json({ msg: `Dealer not found` });
     }
-}
+
+    const { _id, fullName, firstName, lastName, profilePicture, email, role, username, contactNumber, createdAt } = _user;
+
+    return res.status(200).json({
+      user: { _id, fullName, firstName, lastName, profilePicture, email, role, username, contactNumber, createdAt }
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: `Something went wrong`, error });
+  }
+};
+
 
 const signout = (req, res) => {
     res.clearCookie("token");
