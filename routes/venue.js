@@ -39,6 +39,6 @@ router.post(
 router.get("/venue/:venueId", getVenueByVenueId);
 router.get("/venues/:ownerId", getAllVenuesByOwnerId);
 router.get("/all-venues", getAllVenues);
-router.get("/available", checkAvailability);
+router.post("/available", checkAvailability);
 
 module.exports = router;
