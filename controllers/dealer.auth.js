@@ -53,28 +53,35 @@ const signin = (req, res) => {
 }
 
 const DealerProfile = async (req, res) => {
-  const { userId } = req.params;
-
-  if (!userId) {
-    return res.status(404).json({ msg: `Dealer doesn't exist` });
-  }
-
   try {
+    const { userId } = req.params;
+
+    // Check if userId is provided
+    if (!userId) {
+      return res.status(404).json({ msg: `Dealer doesn't exist` });
+    }
+
+    // Fetch user by ID
     const _user = await User.findById(userId);
 
+    // If user not found
     if (!_user) {
       return res.status(404).json({ msg: `Dealer not found` });
     }
 
+    // Send user info
     const { _id, fullName, firstName, lastName, profilePicture, email, role, username, contactNumber, createdAt } = _user;
 
     return res.status(200).json({
       user: { _id, fullName, firstName, lastName, profilePicture, email, role, username, contactNumber, createdAt }
     });
+
   } catch (error) {
-    return res.status(400).json({ msg: `Something went wrong`, error });
+    // Catch all errors and send only one response
+    return res.status(500).json({ msg: "Something went wrong", error });
   }
 };
+
 
 
 const signout = (req, res) => {
